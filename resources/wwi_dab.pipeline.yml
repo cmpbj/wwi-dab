@@ -1,0 +1,20 @@
+# The main pipeline for wwi_dab
+resources:
+  pipelines:
+    wwi_dab_pipeline:
+      name: wwi_dab_pipeline
+      catalog: dbk-test-dev
+      target: wwi_dab_${bundle.target}
+      libraries:
+        - notebook:
+            path: ../src/dlt_pipeline.ipynb
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src
+        pipelines.clusterShutdown.delay: "120s"
+      clusters:
+        - label: default
+          autoscale:
+            min_workers: 1
+            max_workers: 1
+          node_type_id: Standard_DS3_v2
