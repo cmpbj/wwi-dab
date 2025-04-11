@@ -7,7 +7,9 @@ resources:
       target: ${var.schema}
       libraries:
         - notebook:
-            path: ../src/dlt_pipeline.ipynb
+            path: ../src/wwi_bronze.ipynb
+        - notebook:
+            path: ../src/wwi_silver.ipynb
 
       configuration:
         bundle.sourcePath: ${workspace.file_path}/src

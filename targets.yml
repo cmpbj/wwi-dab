@@ -9,7 +9,6 @@ targets:
     workspace:
       host: https://adb-2218998687714328.8.azuredatabricks.net
     variables:
-      catalog: ${var.dev_catalog}
       schema: ${var.dev_schema}
 
   prod:
@@ -24,5 +23,4 @@ targets:
     run_as:
       user_name: carlosmag.barreto@outlook.com
     variables:
-      catalog: ${var.prod_catalog}
       schema: ${var.prod_schema}

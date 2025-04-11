@@ -8,3 +8,9 @@ include:
   - resources/*.yml
   - variables.yml
   - targets.yml
+
+artifacts:
+  default:
+    type: whl
+    build: poetry build
+    path: .

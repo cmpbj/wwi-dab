@@ -9,7 +9,7 @@ from .schema import *
 
 # Constants
 WORLD_IMPORTERS_URL = "https://demodata.grapecity.com/wwi/api/v1/"
-VOLUME_PATH = "/Volumes/dbk-test-dev/wwi_db/wwi_landzone"
+VOLUME_PATH = "/Volumes/dlt-db/raw/wwi_landzone"
 
 # Start Spark session
 spark = SparkSession.builder.getOrCreate()
