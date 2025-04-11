@@ -3,8 +3,8 @@ resources:
   pipelines:
     wwi_dab_pipeline:
       name: wwi_dab_pipeline
-      catalog: dbk-test-dev
-      target: wwi_dab_${bundle.target}
+      catalog: ${var.catalog}
+      target: ${var.schema}
       libraries:
         - notebook:
             path: ../src/dlt_pipeline.ipynb

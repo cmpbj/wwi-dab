@@ -1,0 +1,21 @@
+variables:
+  # Declaring Variables
+  catalog:
+    description: Target catalog
+
+  schema:
+    description: Target schema
+
+  # Settings vars for dev and prod environments
+
+  dev_catalog:
+    default: dbk-dev
+
+  prod_catalog:
+    default: dbk-prod
+
+  dev_schema:
+    default: wwi-dlt-dev
+
+  prod_schema:
+    default: wwi-dlt-prod
