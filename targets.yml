@@ -19,7 +19,7 @@ targets:
       # We explicitly specify /Workspace/Users/carlosmag.barreto@outlook.com to make sure we only have a single copy.
       root_path: /Workspace/Users/carlosmag.barreto@outlook.com/.bundle/${bundle.name}/${bundle.target}
     permissions:
-      - service_principal_name: SP-CICD
+      - user_name: cmagno@carlosmagbarretooutlook.onmicrosoft.com
         level: CAN_MANAGE
     variables:
       schema: ${var.prod_schema}
