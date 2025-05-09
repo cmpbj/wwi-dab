@@ -21,8 +21,6 @@ targets:
     permissions:
       - service_principal_name: SP-CICD
         level: CAN_MANAGE
-    run_as:
-      service_principal_name: SP-CICD
     variables:
       schema: ${var.prod_schema}
       catalog: ${var.prod_catalog}
