@@ -15,6 +15,12 @@ jobs:
 
       - uses: databricks/setup-cli@main
 
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Add Poetry to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
       - run: databricks bundle deploy
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
@@ -32,6 +38,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: databricks/setup-cli@main
+
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Add Poetry to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - run: databricks bundle run wwi_dab_job --refresh-all
         env:
