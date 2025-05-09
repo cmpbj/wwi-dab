@@ -22,7 +22,7 @@ targets:
       - user_name: carlosmag.barreto@outlook.com
         level: CAN_MANAGE
     run_as:
-      user_name: carlosmag.barreto@outlook.com
+      service_principal_name: SP-CICD
     variables:
       schema: ${var.prod_schema}
       catalog: ${var.prod_catalog}
