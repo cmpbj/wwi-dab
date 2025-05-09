@@ -16,7 +16,6 @@ jobs:
       - uses: databricks/setup-cli@main
 
       - run: databricks bundle deploy
-        working-directory: wwi_dab
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
@@ -35,7 +34,6 @@ jobs:
       - uses: databricks/setup-cli@main
 
       - run: databricks bundle run wwi_dab_job --refresh-all
-        working-directory: wwi_dab
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
