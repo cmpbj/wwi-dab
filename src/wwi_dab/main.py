@@ -1,4 +1,5 @@
 import os
+import re
 import requests
 import traceback
 from datetime import datetime
@@ -9,7 +10,6 @@ from .schema import *
 
 # Constants
 WORLD_IMPORTERS_URL = "https://demodata.grapecity.com/wwi/api/v1/"
-VOLUME_PATH = "/Volumes/dlt-db/raw/wwi_landzone"
 
 # Start Spark session
 spark = SparkSession.builder.getOrCreate()
@@ -23,21 +23,35 @@ def extract_json(endpoint):
     return response.json()
 
 
-def save_as_parquet(data, filename, schema):
+def save_as_table(data, table_name, schema):
     if isinstance(data, dict):
         data = [data]
     elif not isinstance(data, list):
         raise ValueError("Unexpected data format")
 
-
     df = spark.createDataFrame(data=data, schema=schema)
-    df.write.mode("overwrite").parquet(os.path.join(VOLUME_PATH, filename))
-    print(f"Saved: {VOLUME_PATH}/{filename}")
+
+    catalog_name = "`db-raw`"
+    schema_name = "wwi_raw"
+    full_schema = f"{catalog_name}.{schema_name}"
+    full_table_name = f"{full_schema}.{table_name}"
+
+    # Create schema if it doesn't exist
+    spark.sql(f"CREATE SCHEMA IF NOT EXISTS {full_schema}")
+
+    # Write the data as a table
+    df.write.mode("overwrite").saveAsTable(full_table_name)
+    print(f"Saved: {full_table_name}")
 
 
-def generic_data_func(endpoint, filename, schema):
+def generic_data_func(endpoint, table_name, schema):
     data = extract_json(endpoint)
-    save_as_parquet(data, f"{filename}.parquet", schema)
+    save_as_table(data, table_name, schema)
+
+def normalize_table_name(endpoint):
+    # Convert CamelCase or PascalCase to snake_case
+    name = re.sub(r'(?<!^)(?=[A-Z])', '_', endpoint).lower()
+    return name
 
 def main():
     endpoints = {
@@ -58,7 +72,8 @@ def main():
     for endpoint, schema in endpoints.items():
         print(f"🔄 Extracting {endpoint} ...")
         try:
-            generic_data_func(endpoint, endpoint, schema)
+            table_name = normalize_table_name(endpoint)
+            generic_data_func(endpoint, table_name, schema)
         except Exception as e:
             print(f"Failed to extract {endpoint}: {e}")
             traceback.print_exc()

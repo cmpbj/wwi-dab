@@ -2,12 +2,20 @@ variables:
   # Declaring Variables
   catalog:
     description: Target catalog
-    default: dlt-db
 
   schema:
     description: Target schema
 
+  dev_name:
+    default: "cmagno"
+
   # Settings vars for dev and prod environments
+
+  dev_catalog:
+    default: db-dev
+
+  prod_catalog:
+    default: db-prod
 
   dev_schema:
     default: wwi-dlt-dev
