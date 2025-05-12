@@ -18,7 +18,7 @@ targets:
       host: https://adb-2218998687714328.8.azuredatabricks.net
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     permissions:
-      - service_principal_name: SP-CI-CD
+      - service_principal_name: 26c08e06-a84c-4090-b0b0-a7aac46f2149
         level: CAN_MANAGE
     variables:
       schema: ${var.prod_schema}
