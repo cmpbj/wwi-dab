@@ -1,0 +1,20 @@
+# The main pipeline for wwi_dab
+resources:
+  pipelines:
+    adw_dab_pipeline:
+      name: adw_dab_pipeline
+      catalog: ${var.catalog}
+      target: ${var.schema}
+      libraries:
+        - notebook:
+            path: ../src/adw_pipeline.ipynb
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src
+        pipelines.clusterShutdown.delay: "600s"
+      clusters:
+        - label: default
+          autoscale:
+            min_workers: 1
+            max_workers: 1
+          node_type_id: Standard_DS3_v2

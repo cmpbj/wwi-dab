@@ -1,8 +1,8 @@
 # The main job for wwi_dab.
 resources:
   jobs:
-    wwi_dab_job:
-      name: wwi_dab_job
+    adw_dab_job:
+      name: adw_dab_job
 
       trigger:
         periodic:
@@ -14,19 +14,16 @@ resources:
           - carlosmag.barreto@gmail.com
 
       tasks:
-        - task_key: extraction_wwi
+        - task_key: extraction_adw
           job_cluster_key: job_cluster
-          python_wheel_task:
-            package_name: wwi_dab
-            entry_point: wwi-extract
-          libraries:
-            - whl: ../dist/*.whl
+          notebook_task:
+            notebook_path: ../src/adw_dab/extraction_adw.ipynb
 
         - task_key: refresh_pipeline
           depends_on:
-            - task_key: extraction_wwi
+            - task_key: extraction_adw
           pipeline_task:
-            pipeline_id: ${resources.pipelines.wwi_dab_pipeline.id}
+            pipeline_id: ${resources.pipelines.adw_dab_pipeline.id}
 
       job_clusters:
         - job_cluster_key: job_cluster
