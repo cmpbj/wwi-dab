@@ -18,7 +18,7 @@ resources:
           job_cluster_key: job_cluster
           python_wheel_task:
             package_name: wwi_dab
-            entry_point: wwi-extract
+            entry_point: main
           libraries:
             - whl: ../dist/*.whl
 
