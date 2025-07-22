@@ -23,5 +23,5 @@ resources:
                 min_workers: 1
                 max_workers: 1
             spark_conf:
-              schema: ${var.ci_name}_${bundle.git.branch}
+              schema: ${var.ci_schema}
               catalog: ${var.ci_catalog}

@@ -9,6 +9,8 @@ on:
   push:
     branches:
       - main
+env:
+  CI_BRANCH: ${{ github.ref_name }}_${{ github.run_id }}
 
 jobs:
   deploy:
@@ -28,7 +30,7 @@ jobs:
       - name: Add Poetry to PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - run: databricks bundle deploy
+      - run: databricks bundle deploy --all-files
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
@@ -53,17 +55,17 @@ jobs:
       - name: Add Poetry to PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - run: databricks bundle run wwi_dab_job --refresh-all
+      - run: databricks bundle run wwi_dab_job --refresh-all --var="ci_schema=${{ CI_BRANCH }}"
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
 
-      - run: databricks bundle run adw_dab_job --refresh-all
+      - run: databricks bundle run adw_dab_job --refresh-all --var="ci_schema=${{ CI_BRANCH }}"
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
 
-      - run: databricks bundle run drop_ci_schema_job --refresh-all
+      - run: databricks bundle run drop_ci_schema_job --refresh-all --var="ci_schema=${{ CI_BRANCH }}"
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
