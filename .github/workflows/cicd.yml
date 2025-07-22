@@ -28,7 +28,7 @@ jobs:
       - name: Add Poetry to PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - run: databricks bundle deploy
+      - run: databricks bundle deploy --var="ci_schema=$CI_BRANCH"
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
