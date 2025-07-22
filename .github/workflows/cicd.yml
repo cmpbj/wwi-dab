@@ -15,7 +15,7 @@ jobs:
     name: "Deploy bundle DEV"
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ci
 
     steps:
       - uses: actions/checkout@v4
@@ -31,13 +31,13 @@ jobs:
       - run: databricks bundle deploy
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: dev
+          DATABRICKS_BUNDLE_ENV: ci
 
   pipeline_update:
     name: "Run pipeline update"
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ci
 
     needs:
       - deploy
