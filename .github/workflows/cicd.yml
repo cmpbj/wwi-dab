@@ -68,6 +68,11 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
 
+      - run: databricks bundle destroy
+        env:
+          DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: ci
+
   deploy_production:
     name: "Deploy bundle PROD"
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
