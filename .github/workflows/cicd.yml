@@ -56,12 +56,17 @@ jobs:
       - run: databricks bundle run wwi_dab_job --refresh-all
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: dev
+          DATABRICKS_BUNDLE_ENV: ci
 
       - run: databricks bundle run adw_dab_job --refresh-all
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: dev
+          DATABRICKS_BUNDLE_ENV: ci
+
+      - run: databricks bundle run drop_ci_schema_job --refresh-all
+        env:
+          DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: ci
 
   deploy_production:
     name: "Deploy bundle PROD"

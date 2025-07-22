@@ -9,6 +9,9 @@ variables:
   dev_name:
     default: "cmagno"
 
+  ci_name:
+    default: "ci"
+
   # Settings vars for dev and prod environments
 
   dev_catalog:
@@ -17,8 +20,14 @@ variables:
   prod_catalog:
     default: db-prod
 
+  ci_catalog:
+    default: db-dev
+
   dev_schema:
     default: wwi-dlt-dev
 
   prod_schema:
     default: wwi-dlt-prod
+
+  ci_schema:
+    default: wwi-dlt-ci
