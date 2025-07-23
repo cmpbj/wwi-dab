@@ -29,14 +29,15 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Set CI_BRANCH (replace / with _)
+        id: set_ci_branch
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
           CLEANED_BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's;/;_;g' | sed 's/-/_/g')
-          SCHEMA_NAME="dbt_ci_${CLEANED_BRANCH_NAME}_${{ github.run_id }}"
+          SCHEMA_NAME="dlt_ci${CLEANED_BRANCH_NAME}_${{ github.run_id }}"
           export CI_BRANCH=$SCHEMA_NAME
           echo $CI_BRANCH
 
-      - run: databricks bundle deploy --var="schema=$CI_BRANCH"
+      - run: databricks bundle deploy --var="schema=${{ steps.set_ci_branch.outputs.ci_branch }}"
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
@@ -62,10 +63,11 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Set CI_BRANCH (replace / with _)
+        id: set_ci_branch
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
           CLEANED_BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's;/;_;g' | sed 's/-/_/g')
-          SCHEMA_NAME="dbt_ci_${CLEANED_BRANCH_NAME}_${{ github.run_id }}"
+          SCHEMA_NAME="dlt_ci${CLEANED_BRANCH_NAME}_${{ github.run_id }}"
           export CI_BRANCH=$SCHEMA_NAME
           echo $CI_BRANCH
 
@@ -74,12 +76,12 @@ jobs:
       #     DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
       #     DATABRICKS_BUNDLE_ENV: ci
 
-      - run: databricks bundle run adw_dab_job --refresh-all --var="schema=$CI_BRANCH"
+      - run: databricks bundle run adw_dab_job --refresh-all --var="schema=${{ steps.set_ci_branch.outputs.ci_branch }}"
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
 
-      - run: databricks bundle run drop_ci_schema_job --refresh-all --var="schema=$CI_BRANCH"
+      - run: databricks bundle run drop_ci_schema_job --refresh-all --var="schema=${{ steps.set_ci_branch.outputs.ci_branch }}"
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
