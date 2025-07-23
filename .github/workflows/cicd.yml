@@ -34,8 +34,7 @@ jobs:
           BRANCH_NAME="${{ github.head_ref }}"
           CLEANED_BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's;/;_;g' | sed 's/-/_/g')
           SCHEMA_NAME="dlt_ci${CLEANED_BRANCH_NAME}_${{ github.run_id }}"
-          export CI_BRANCH=$SCHEMA_NAME
-          echo $CI_BRANCH
+          echo "ci_branch=$SCHEMA_NAME" >> $GITHUB_OUTPUT
 
       - run: databricks bundle deploy --var="schema=${{ steps.set_ci_branch.outputs.ci_branch }}"
         env:
@@ -68,8 +67,7 @@ jobs:
           BRANCH_NAME="${{ github.head_ref }}"
           CLEANED_BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's;/;_;g' | sed 's/-/_/g')
           SCHEMA_NAME="dlt_ci${CLEANED_BRANCH_NAME}_${{ github.run_id }}"
-          export CI_BRANCH=$SCHEMA_NAME
-          echo $CI_BRANCH
+          echo "ci_branch=$SCHEMA_NAME" >> $GITHUB_OUTPUT
 
       # - run: databricks bundle run wwi_dab_job --refresh-all --var="schema=$CI_BRANCH"
       #   env:
