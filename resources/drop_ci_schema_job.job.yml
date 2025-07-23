@@ -1,0 +1,27 @@
+# The main job for wwi_dab.
+resources:
+  jobs:
+    drop_ci_schema_job:
+      name: drop_ci_schema_job
+
+      email_notifications:
+        on_failure:
+          - carlosmag.barreto@gmail.com
+
+      tasks:
+        - task_key: drop_ci_schema
+          job_cluster_key: job_cluster
+          notebook_task:
+            notebook_path: ../src/drop_ci_schema.ipynb
+
+      job_clusters:
+        - job_cluster_key: job_cluster
+          new_cluster:
+            spark_version: 16.2.x-scala2.12
+            node_type_id: Standard_DS3_v2
+            autoscale:
+                min_workers: 1
+                max_workers: 1
+            spark_conf:
+              schema: ${var.schema}
+              catalog: ${var.catalog}
