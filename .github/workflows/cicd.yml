@@ -69,10 +69,10 @@ jobs:
           export CI_BRANCH=$SCHEMA_NAME
           echo $CI_BRANCH
 
-      - run: databricks bundle run wwi_dab_job --refresh-all --var="schema=$CI_BRANCH"
-        env:
-          DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: ci
+      # - run: databricks bundle run wwi_dab_job --refresh-all --var="schema=$CI_BRANCH"
+      #   env:
+      #     DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
+      #     DATABRICKS_BUNDLE_ENV: ci
 
       - run: databricks bundle run adw_dab_job --refresh-all --var="schema=$CI_BRANCH"
         env:
@@ -84,10 +84,10 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
           DATABRICKS_BUNDLE_ENV: ci
 
-      - run: databricks bundle destroy --auto-approve
-        env:
-          DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: ci
+      # - run: databricks bundle destroy --auto-approve
+      #   env:
+      #     DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
+      #     DATABRICKS_BUNDLE_ENV: ci
 
   deploy_production:
     name: "Deploy bundle PROD"
